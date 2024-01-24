@@ -9,7 +9,7 @@ services:
       - db
     environment:
       - DB_HOST=db
-      - DB_USER=user
+      - DB_USER=postgres
       - DB_PASS=password
       - DB_NAME=shopping-list
 
@@ -25,30 +25,11 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=user
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=shopping-list
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  migrate:
-    image: migrate/migrate:v4.15.2
-    profiles: ["tools"]
-    volumes:
-      - ./server/migrations:/migrations
-    entrypoint:
-      [
-        "migrate",
-        "-path",
-        "/server/migrations",
-        "-database",
-        "postgresql://user:password@db:5432/shopping-list?sslmode=disable",
-      ]
-    command: ["up"]
-    depends_on:
-      db:
-        condition: service_healthy
-    restart: on-failure
-    
 volumes:
   postgres_data:
