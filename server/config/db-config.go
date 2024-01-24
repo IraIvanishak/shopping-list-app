@@ -18,8 +18,6 @@ func init() {
 	password := os.Getenv("DB_PASS")
 	name := os.Getenv("DB_NAME")
 
-	fmt.Println(name)
-
 	connectionString := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", host, user, password, name)
 
 	db, err := sql.Open("postgres", connectionString)

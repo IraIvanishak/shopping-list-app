@@ -12,6 +12,7 @@ services:
       - DB_USER=postgres
       - DB_PASS=password
       - DB_NAME=shopping-list
+    restart: on-failure
 
   client:
     build: ./client

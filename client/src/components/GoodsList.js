@@ -33,7 +33,6 @@ const GoodsList = () => {
 
     const handleEdit = async () => {
         try {
-            console.log(editGood)
             await fetch(`http://localhost:8080/edit/${editGood.id}`, {
                 method: 'POST',
                 headers: {
@@ -56,7 +55,6 @@ const GoodsList = () => {
             const response = await fetch('http://localhost:8080/');
             const data = await response.json();
             setGoods(data);
-            console.log(data)
         } catch (error) {
             console.error('Error fetching goods:', error);
         }
