@@ -3,6 +3,7 @@ package config
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -25,7 +26,7 @@ func init() {
 
 	db, err := sql.Open("postgres", connectionString)
 	if err != nil {
-		fmt.Println("error opening database connection:", err)
+		log.Println("error opening database connection:", err)
 	}
 	DB = db
 }

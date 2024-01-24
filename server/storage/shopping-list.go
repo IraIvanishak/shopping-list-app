@@ -8,14 +8,14 @@ import (
 )
 
 type Good struct {
-	ID     int    `josn:"id"`
+	ID     int    `json:"id"`
 	Name   string `json:"name"`
-	Amount int    `josn:"amount"`
+	Amount int    `json:"amount"`
 }
 
 // GetAllGoods read all goods from the table
 func GetAllGoods() ([]Good, error) {
-	query := `SELECT name, amount FROM shopping_list`
+	query := `SELECT id, name, amount FROM shopping_list ORDER BY id ASC `
 
 	rows, err := config.DB.Query(query)
 	if err != nil {
@@ -28,7 +28,7 @@ func GetAllGoods() ([]Good, error) {
 
 	for rows.Next() {
 		var good Good
-		err := rows.Scan(&good.Name, &good.Amount)
+		err := rows.Scan(&good.ID, &good.Name, &good.Amount)
 		if err != nil {
 			log.Println("Error scanning row:", err)
 			return nil, err
@@ -59,7 +59,7 @@ func CreateGood(good *Good) error {
 
 // UpdateGood updates an existing Good in the table.
 func UpdateGood(good *Good) error {
-	query := `UPDATE shopping_list SET name = $1, amount = $2 WHERE id = $3`
+	query := `UPDATE shopping_list SET name = $1, amount = $2 WHERE id = $3 `
 
 	res, err := config.DB.Exec(query, good.Name, good.Amount, good.ID)
 	if err != nil {
